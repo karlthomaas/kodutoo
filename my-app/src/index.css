@@ -1,0 +1,15 @@
+.sector{
+  padding-left: 60px;
+}
+
+.subcategory{
+  padding-left: 30px;
+}
+
+.subcategory:disabled{
+  color: black;
+}
+
+.category:disabled{
+  color: black;
+}
