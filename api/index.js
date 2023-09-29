@@ -69,6 +69,11 @@ app.post("/api/save-user", (req, res) => {
     return res.status(400).send({ error: "Missing required fields" });
   }
 
+  const onlyLettersPattern = /^[A-Za-z]+$/;
+  if(!name.match(onlyLettersPattern)){
+    return res.status(400).send({ error: "Name can only contain letters" });
+  }
+
   try{
     if (!cookies["session"]) {
       throw new Error("No cookie")
