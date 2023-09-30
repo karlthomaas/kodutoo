@@ -7,21 +7,28 @@ function App() {
   const [categories, setCategories] = useState<any>(null)
   const [username, setUsername] = useState<string>("")
   const [userSector, setUserSector] = useState<string[]>([]) // stores user selected options
-  const [isSubmitLoading, setIsSubmitLoading] = useState<boolean>(false)
-
+  const [isApiOffline, setIsApiOffline] = useState<boolean>(false)
 
   useEffect(() => {
       // Fetch sectors on page load and when userSector changes
-      fetch("http://localhost:4000/api/get-sectors")
-      .then(res => res.json())
+      fetch(process.env.REACT_APP_API_URL + "/api/get-sectors")
+      .then(res => {
+        setIsApiOffline(false)
+        return res.json()
+      })
       .then(data => setCategories(data.data))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setIsApiOffline(true)
+        console.log("Api is offline");
+        alert("Api is offline!")
+      });
+      
     }, [userSector]);
 
 
   useEffect(() => {
     // Fetch user data on page load and set username and user sectors
-    fetch("http://localhost:4000/api/get-user", {
+    fetch(process.env.REACT_APP_API_URL + "/api/get-user", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -30,6 +37,7 @@ function App() {
     })
     .then(res => res.json())
     .then(resJson => {
+      setIsApiOffline(false)
       const userSectors: any = [] // Stores user sectors
       if (resJson.data){
         // iterates through user sectors and adds them to userSectors array
@@ -41,13 +49,17 @@ function App() {
       }
       console.log(userSectors)
     })
+    .catch((err) => {
+      setIsApiOffline(true)
+      console.log("Api is offline");
+      alert("Api is offline!")
+    });
   }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitLoading(true)
 
-    fetch("http://localhost:4000/api/save-user", {
+    fetch(process.env.REACT_APP_API_URL + "/api/save-user", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -62,9 +74,7 @@ function App() {
     .catch( err => {
       alert("Error saving user, please try again!\nError:" + err)
     })
-    .finally(() => {
-      setIsSubmitLoading(false)
-    })
+
   };
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,6 +129,7 @@ function App() {
         <input onChange={handleUsernameChange} required id="username" type="text" value={username}/>
         <br />
         <br />
+        { isApiOffline && <p>Api is offline!</p>}
         {categories && (
           <>
           <label htmlFor="select-sectors">Sectors:</label>
