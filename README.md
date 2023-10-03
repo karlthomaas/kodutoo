@@ -40,3 +40,14 @@ Paste `docker ps` and check if all containers are running.
 ## What would I do differently?
 1. I would JSON like Database for this project (example: MongoDB), it would've make getting & inserting Sectors much more easier.
 2. Would update npm first, created the project accidentally in older npm version.
+
+## Database schemas
+
+**Table: categories**
+| id : integer | category text | subcategory text | sector text | children integer | 
+
+Explanation:
+`children` - false or true (0 | 1 ) - boolean for subcategory -> sector existence. 
+
+**Table: users**
+| id: integer | user_id text | name text | sector text | 
