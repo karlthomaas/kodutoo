@@ -21,20 +21,22 @@ For Database I used Sqlite3, because it's simple to use, powerful and very light
 
 ## How to run it?
 
-1. Git clone the project: `git clone https://github.com/karlthomaas/kodutoo.git`
-2. Open two terminals and navigate into project `cd kodutoo`
-3. **Terminal 1**: Navigate into API folder using: `cd api`
-4. **Terminal 1**: Install dependencies by using: `npm install` 
-5. **Terminal 1**: Start the API using `./node.js`
+1. Install Docker on your Operating System
+2. Git clone the project: `git clone https://github.com/karlthomaas/kodutoo.git`
+3. Navigate into api folder `cd kodutoo/api`
+4. Paste `docker build . -t helmes/kodutoo-api`
+5. Paste `docker run -p 4000:4000 -d helmes/kodutoo-api`
+6. Navigate back to root folder `cd ..`
+7. Navigate into my-app `cd my-app`
+6. Paste `docker build . -t helmes/kodutoo-my-app`
+7. Paste `docker run -p 3000:3000 -d helmes/kodutoo-api`
 
-6. **Terminal 2**: Navigate into my-app folder using: `cd my-api`
-7. **Terminal 2**: Install dependencies by using: `npm install` 
-8. **Terminal 2**: Start the website by using: `npm start`
+Open `http://locahost:3000` in browser.
 
-React should open a new page `http://locahost:3000`
-
-If it doesn't open automatically, open `http://locahost:3000` in browser.
+**Doesn't work?**
+Paste `docker ps` and check if all containers are running.
 
 
 ## What would I do differently?
-I would JSON like Database for this project (example: MongoDB), it would've make getting & inserting Sectors much more easier. 
+1. I would JSON like Database for this project (example: MongoDB), it would've make getting & inserting Sectors much more easier.
+2. Would update npm first, created the project accidentally in older npm version.
