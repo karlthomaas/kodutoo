@@ -7,20 +7,15 @@ function App() {
   const [categories, setCategories] = useState<any>(null)
   const [username, setUsername] = useState<string>("")
   const [userSector, setUserSector] = useState<string[]>([]) // stores user selected options
-  const [isApiOffline, setIsApiOffline] = useState<boolean>(false)
 
   useEffect(() => {
       // Fetch sectors on page load and when userSector changes
       fetch(process.env.REACT_APP_API_URL + "/api/get-sectors")
       .then(res => {
-        setIsApiOffline(false)
         return res.json()
       })
       .then(data => setCategories(data.data))
       .catch((err) => {
-        setIsApiOffline(true)
-        console.log("Api is offline");
-        alert("Api is offline!")
       });
       
     }, [userSector]);
@@ -37,7 +32,6 @@ function App() {
     })
     .then(res => res.json())
     .then(resJson => {
-      setIsApiOffline(false)
       const userSectors: any = [] // Stores user sectors
       if (resJson.data){
         // iterates through user sectors and adds them to userSectors array
@@ -50,7 +44,6 @@ function App() {
       console.log(userSectors)
     })
     .catch((err) => {
-      setIsApiOffline(true)
       console.log("Api is offline");
       alert("Api is offline!")
     });
@@ -129,7 +122,6 @@ function App() {
         <input onChange={handleUsernameChange} required id="username" type="text" value={username}/>
         <br />
         <br />
-        { isApiOffline && <p>Api is offline!</p>}
         {categories && (
           <>
           <label htmlFor="select-sectors">Sectors:</label>
