@@ -47,7 +47,7 @@ Paste `docker ps` and check if all containers are running.
 | id : integer | category text | subcategory text | sector text | children integer | 
 
 Explanation:
-`children` - false or true (0 | 1 ) - boolean for subcategory -> sector existence. 
+**children** - false or true (0 | 1 ) for children existence
 
 **Table: users**
 | id: integer | user_id text | name text | sector text | 
